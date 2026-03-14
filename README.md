@@ -28,8 +28,8 @@ Aby uruchomić projekt na swoim komputerze, postępuj zgodnie z poniższymi krok
 
 1. **Sklonuj repozytorium:**
    ```bash
-   git clone https://github.com/twoja-nazwa-uzytkownika/pogodno-power-map.git
-   cd pogodno-power-map
+   git clone https://github.com/twoja-nazwa-uzytkownika/pogodno.git
+   cd pogodno
    ```
 
 2. **Zainstaluj zależności:**
