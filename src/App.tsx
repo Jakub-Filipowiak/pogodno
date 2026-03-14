@@ -3,13 +3,24 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
 import { renderToString } from 'react-dom/server';
-import { MapContainer, TileLayer, Marker, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, ZoomControl, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+
+// Fix for Leaflet map not rendering correctly in some containers
+function MapResizeFix() {
+  const map = useMap();
+  useEffect(() => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 100);
+  }, [map]);
+  return null;
+}
 import { 
   MapPin, 
   IceCream, 
@@ -119,7 +130,7 @@ const createIcon = (type: string, isSelected: boolean) => {
 export default function App() {
   const [selectedPoint, setSelectedPoint] = useState<typeof POGODNO_POINTS[0] | null>(null);
   const [showQR, setShowQR] = useState(false);
-  const appUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const appUrl = 'https://pogodno.nsip.ovh';
 
   return (
     <div className="min-h-screen bg-[#f5f5f0] text-[#4a4a40] font-serif selection:bg-emerald-200">
@@ -149,19 +160,21 @@ export default function App() {
 
       <main className="max-w-7xl mx-auto px-8 pb-20 grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* Map Section */}
-        <div className="lg:col-span-2 relative aspect-square md:aspect-video lg:aspect-auto lg:h-[70vh] bg-white rounded-[40px] shadow-xl shadow-black/5 border border-white overflow-hidden group z-0">
+        <div className="lg:col-span-2 relative aspect-square md:aspect-video lg:aspect-auto lg:h-[70vh] min-h-[400px] bg-white rounded-[40px] shadow-xl shadow-black/5 border border-white overflow-hidden group z-0">
           
           <MapContainer 
             center={[53.442, 14.518]} 
             zoom={14} 
             zoomControl={false}
-            className="w-full h-full z-0"
+            style={{ height: '100%', width: '100%' }}
+            className="z-0"
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
               url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
             />
             <ZoomControl position="topright" />
+            <MapResizeFix />
             {POGODNO_POINTS.map((point) => (
               <Marker 
                 key={point.id} 
