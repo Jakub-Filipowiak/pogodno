@@ -1,5 +1,5 @@
 {
-  "name": "Pogodno Power Map",
+  "name": "Power Map dzielnicy Pogodno",
   "description": "Interaktywna mapa osiedla Pogodno w Szczecinie z zaznaczonymi punktami mocy, lokalnymi zabytkami i najlepszymi lodziarniami.",
   "requestFramePermissions": ["geolocation"]
 }

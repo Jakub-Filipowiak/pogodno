@@ -17,8 +17,14 @@ export default defineConfig(({mode}) => {
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+      // Do not modify file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
+      
+      // TUTAJ DODAJEMY DOZWOLONY HOST:
+      allowedHosts: ['pogodno.nsip.ovh'], 
+      
+      // Opcjonalnie: jeśli wchodzisz też czasem przez adres IP malinki (np. 192.168.1.100), 
+      // możesz zamiast tablicy wpisać po prostu: allowedHosts: true,
     },
   };
 });

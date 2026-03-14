@@ -23,14 +23,15 @@ function MapResizeFix() {
 }
 import { 
   MapPin, 
-  IceCream, 
+  Pizza, 
   Palmtree, 
   Users, 
   Info, 
   QrCode, 
   ExternalLink,
   Navigation,
-  Heart
+  Heart,
+  Activity
 } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -46,63 +47,65 @@ const POGODNO_POINTS = [
     name: 'Plac Jakuba Wujka',
     description: 'Serce Pogodna. Okrągły plac z piękną zielenią, idealny na spacer i spotkanie.',
     type: 'meeting_spot',
-    coords: [53.44422, 14.51654] as [number, number],
+    coords: [53.446665618014315, 14.515843546188176] as [number, number],
     mapsUrl: 'https://maps.google.com/?q=Plac+Jakuba+Wujka+Szczecin'
   },
   {
-    id: 'marczak',
-    name: 'Lody Marczak',
-    description: 'Legendarna lodziarnia. Najlepsze rzemieślnicze lody w okolicy, często z długą kolejką.',
-    type: 'ice_cream',
-    coords: [53.4435, 14.5120] as [number, number],
-    mapsUrl: 'https://maps.google.com/?q=Lody+Marczak+Szczecin+Pogodno'
+    id: 'verde',
+    name: 'Pizzeria VERDE',
+    description: 'Rynek Pogodno, Reymonta 3/pawilon 73, 71-276 Szczecin. Pyszna lokalna pizza.',
+    type: 'food',
+    coords: [53.44233690649671, 14.512065502957366] as [number, number],
+    mapsUrl: 'https://maps.google.com/?q=Pizzeria+VERDE+Szczecin+Pogodno'
   },
   {
-    id: 'kasprowicza',
-    name: 'Park Kasprowicza',
-    description: 'Największy park Szczecina na obrzeżach Pogodna. Amfiteatr, jezioro Rusałka i pomnik Trzech Orłów.',
-    type: 'nature',
-    coords: [53.4405, 14.5385] as [number, number],
-    mapsUrl: 'https://maps.google.com/?q=Park+Kasprowicza+Szczecin'
+    id: 'perugia',
+    name: 'Pizzeria Perugia',
+    description: 'Kolejna świetna pizzeria na mapie Pogodna, oferująca autentyczne włoskie smaki.',
+    type: 'food',
+    coords: [53.441061415011276, 14.489714369539369] as [number, number],
+    mapsUrl: 'https://maps.google.com/?q=Pizzeria+Perugia+Szczecin'
   },
   {
-    id: 'willa',
-    name: 'Architektura Willowa',
-    description: 'Pogodno słynie z przedwojennych willi. Spacer ulicami takimi jak Solskiego czy Mickiewicza to uczta dla oczu.',
-    type: 'monument',
-    coords: [53.4465, 14.5105] as [number, number],
-    mapsUrl: 'https://maps.google.com/?q=Pogodno+Szczecin+wille'
+    id: 'boisko',
+    name: 'Boisko',
+    description: 'Lokalne boisko sportowe, idealne miejsce na aktywność fizyczną na świeżym powietrzu.',
+    type: 'sports',
+    coords: [53.444883955473, 14.513121982033137] as [number, number],
+    mapsUrl: 'https://maps.google.com/?q=53.444883955473,14.513121982033137'
   },
   {
     id: 'stadion',
     name: 'Stadion Miejski im. Floriana Krygiera',
     description: 'Dom Pogoni Szczecin. Miejsce wielkich emocji sportowych na granicy osiedla.',
-    type: 'meeting_spot',
-    coords: [53.4382, 14.5128] as [number, number],
+    type: 'sports',
+    coords: [53.43664836756705, 14.518619034191563] as [number, number],
     mapsUrl: 'https://maps.google.com/?q=Stadion+Miejski+Szczecin'
   },
   {
     id: 'kosciol',
-    name: 'Kościół Świętej Rodziny',
-    description: 'Charakterystyczny punkt orientacyjny z wysoką wieżą, widoczny z wielu miejsc Pogodna.',
+    name: 'Kościół Rzymskokatolicki pw. Świętego Krzyża',
+    description: 'Ważny ośrodek duchowy i charakterystyczny punkt na mapie Pogodna.',
     type: 'monument',
-    coords: [53.4418, 14.5225] as [number, number],
-    mapsUrl: 'https://maps.google.com/?q=Kosciol+Swietej+Rodziny+Szczecin'
+    coords: [53.4402100237174, 14.509410054587796] as [number, number],
+    mapsUrl: 'https://maps.google.com/?q=Kosciol+Swietego+Krzyza+Szczecin'
   }
 ];
 
 const CATEGORY_ICONS = {
-  ice_cream: <IceCream className="w-5 h-5" />,
+  food: <Pizza className="w-5 h-5" />,
   monument: <Info className="w-5 h-5" />,
   meeting_spot: <Users className="w-5 h-5" />,
   nature: <Palmtree className="w-5 h-5" />,
+  sports: <Activity className="w-5 h-5" />,
 };
 
 const CATEGORY_COLORS = {
-  ice_cream: 'bg-pink-500',
+  food: 'bg-orange-500',
   monument: 'bg-amber-600',
   meeting_spot: 'bg-blue-500',
   nature: 'bg-emerald-500',
+  sports: 'bg-indigo-500',
 };
 
 const createIcon = (type: string, isSelected: boolean) => {
@@ -142,7 +145,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl md:text-7xl font-light tracking-tight text-[#2d2d24]"
           >
-            Pogodno <span className="italic text-emerald-800">Power Map</span>
+            Power Map <span className="italic text-emerald-800">dzielnicy Pogodno</span>
           </motion.h1>
           <p className="mt-4 text-lg opacity-80 max-w-md font-sans">
             Odkryj ukryte skarby, najlepsze smaki i historyczne zakątki najbardziej urokliwego osiedla Szczecina.
